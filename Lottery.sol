@@ -3,9 +3,15 @@ pragma solidity ^0.8.16;
 contract Lottery {
     address public Admin;
     address payable[]  public players;
-
+    
     constructor() {
         Admin = msg.sender;
+    }
+    
+    // Only manager block
+    modifier restricted() {
+        require(msg.sender == Admin);
+        _;
     }
     
     function enter() public payable {
@@ -22,11 +28,7 @@ contract Lottery {
         players[index].transfer(address(this).balance);
         delete players;
     }
-    // Only manager block
-    modifier restricted() {
-        require(msg.sender == Admin);
-        _;
-    }
+    
     //Return all the players who entered.
     function getPlayers() public view returns (address payable[] memory) {
         return players;
