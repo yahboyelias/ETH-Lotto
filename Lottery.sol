@@ -10,7 +10,7 @@ contract Lottery {
     
     // Only manager block
     modifier restricted() {
-        require(msg.sender == Admin);
+        require(msg.sender == Admin, "You are not the owner");
         _;
     }
     
